@@ -165,7 +165,7 @@ def tests():
                 tt = time.time()
                 a.solve()
                 t += time.time() - tt
-            timeResults.append((time.time() - t) * 100)
+            timeResults.append((time.time() - t) * 1000 / repeatCount)
         plt.plot(sizes, timeResults, label=f'{threadCount} поток(ов)')
         threadCount *= 2
     plt.legend(loc='upper left')
