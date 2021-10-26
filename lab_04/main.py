@@ -27,7 +27,7 @@ class Matrix:
         for i in range(self.size):
             self.matrix.append([])
             for j in range(self.size):
-                self.matrix[-1].append(random.randint(-10, 10))
+                self.matrix[-1].append(random.randint(-1000, 1000))
         print(f'Generated matrix  {self.matrix}')
         return self
 
@@ -159,11 +159,13 @@ def tests():
         a = Solver()
         a.threadCount = threadCount
         for i in range(minMatrixSize, maxMatrixSize + 1):
-            t = time.time()
+            t = 0
             for j in range(repeatCount):
                 a.m = Matrix(size=i).randomize()
+                tt = time.time()
                 a.solve()
-            timeResults.append(time.time() - t)
+                t += time.time() - tt
+            timeResults.append((time.time() - t) * 1000)
         plt.plot(sizes, timeResults, label=f'{threadCount} поток(ов)')
         threadCount *= 2
     plt.legend(loc='upper left')
