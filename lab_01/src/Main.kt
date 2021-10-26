@@ -1,11 +1,3 @@
-//fun main() {
-//    GlobalScope.launch { // запуск новой сопрограммы в фоне
-//        delay(1000L) // неблокирующая задержка на 1 секунду
-//        println("World!") // вывод результата после задержки
-//    }
-//    println("Hello,") // пока сопрограмма проводит вычисления, основной поток продолжает свою работу
-//    Thread.sleep(2000L) // блокировка основного потока на 2 секунды, чтобы сопрограмма успела произвести вычисления
-//}
 
 fun main() {
 //
@@ -22,7 +14,14 @@ fun main() {
 //    launch {
 //
 //    }
-    val algorithmTester = AlgorithmTester("увлечение", "развлечения", 1000)
-    algorithmTester.longWordsTimeTest()
+//    val algorithmTester = AlgorithmTester("", "", 1000)
+//    algorithmTester.blackBoxTests()
+    while (true) {
+        print("Word A: ")
+        val a: String = readLine()!!
+        print("Word B: ")
+        val b: String = readLine()!!
+        AlgorithmTester(a, b, 1000).timeTests()
+    }
 //    algorithmTester.test()
 }
