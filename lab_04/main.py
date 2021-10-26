@@ -143,30 +143,34 @@ def ui():
         print(f'Threads {threadCount}, time = {time.time() - t}, result = {res}')
         threadCount *= 2
 
+
 def tests():
     threadCount = 1
     sizes = []
-    timeResults = []
-    for i in range(3, 8):
+    minMatrixSize = 4
+    maxMatrixSize = 9
+    maxThreadsCount = 32
+    repeatCount = 10
+    for i in range(minMatrixSize, maxMatrixSize + 1):
         sizes.append(i)
-    while threadCount <= 1:
+    while threadCount <= maxThreadsCount:
+        print('threads', threadCount)
+        timeResults = []
         a = Solver()
         a.threadCount = threadCount
-        for i in range(4, 9):
+        for i in range(minMatrixSize, maxMatrixSize + 1):
             t = time.time()
-            for j in range(10):
+            for j in range(repeatCount):
                 a.m = Matrix(size=i).randomize()
                 a.solve()
             timeResults.append(time.time() - t)
+        plt.plot(sizes, timeResults, label=f'{threadCount} поток(ов)')
         threadCount *= 2
-    fig, ax = plt.subplots()
-    print(sizes)
-    print(timeResults)
-    plt.plot(sizes, timeResults)
-    ax.set_xlabel('Size')
-    ax.set_ylabel('Time (ms)')
+    plt.legend(loc='upper left')
+    plt.xlabel('Размерность')
+    plt.ylabel('Время работы (мс)')
+    plt.title('Зависимость времени работы от размерности матрицы и количества потоков')
     plt.show()
-
 
 
 if __name__ == '__main__':
