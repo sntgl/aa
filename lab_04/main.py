@@ -142,26 +142,34 @@ def ui():
         res = a.solve()
         print(f'Threads {threadCount}, time = {time.time() - t}, result = {res}')
         threadCount *= 2
-#
-# def tests():
-#     threadCount = 1
-#     sizes = []
-#     for i in range(3, 10):
-#         sizes.append(i)
-#     while threadCount <= 1:
-#         timeResults = []
-#         a = Solver()
-#         a.threadCount = threadCount
-#         t = time.time()
-#         for i in range(3, 10):
-#             a.m = Matrix(size=3)
-#         timeResults.append(time.time() - t)
-#     fig, ax = plt.subplots()
-#     ax.plot([sizes, timeResults])
-#
+
+def tests():
+    threadCount = 1
+    sizes = []
+    timeResults = []
+    for i in range(3, 8):
+        sizes.append(i)
+    while threadCount <= 1:
+        a = Solver()
+        a.threadCount = threadCount
+        for i in range(4, 9):
+            t = time.time()
+            for j in range(10):
+                a.m = Matrix(size=i).randomize()
+                a.solve()
+            timeResults.append(time.time() - t)
+        threadCount *= 2
+    fig, ax = plt.subplots()
+    print(sizes)
+    print(timeResults)
+    plt.plot(sizes, timeResults)
+    ax.set_xlabel('Size')
+    ax.set_ylabel('Time (ms)')
+    plt.show()
+
 
 
 if __name__ == '__main__':
     freeze_support()
-    ui()
-    # tests()
+    # ui()
+    tests()
