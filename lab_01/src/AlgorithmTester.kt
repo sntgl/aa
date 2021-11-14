@@ -24,7 +24,7 @@ class AlgorithmTester(string1: String, string2: String, repeats_in: Int) {
     fun timeTests() {
         println(
             """
-            |Исходное слово - $s1', конечное - '$s2'
+            |Исходное слово - '$s1', конечное - '$s2'
             |Количество повторов - $repeats
         """.trimMargin()
         )
@@ -75,11 +75,30 @@ class AlgorithmTester(string1: String, string2: String, repeats_in: Int) {
             .joinToString("")
     }
 
+    fun blackBoxTests() {
+        algorithmArrayLev.forEach { algorithm: Algorithm ->
+            blackBox.forEach { test: AlgTest ->
+                algorithm.setData(test.s1, test.s2)
+                test.checkLev(algorithm.findDiff())
+            }
+            println("${algorithm.name} blackbox tests passed!")
+        }
+        println("All Lev blackbox tests passed!")
+        algorithmArrayDam.forEach { algorithm: Algorithm ->
+            blackBox.forEach { test: AlgTest ->
+                algorithm.setData(test.s1, test.s2)
+                test.checkDam(algorithm.findDiff())
+            }
+            println("${algorithm.name} blackbox tests passed!")
+        }
+        println("All Dam blackbox tests passed!")
+    }
+
     companion object {
         private val algorithmArrayLev: Array<Algorithm> = arrayOf(
             LevRecursionAlgorithm(),
             LevMatrixAlgorithm(),
-            LevIterAlgorithm()
+//            LevIterAlgorithm()
         )
         private val algorithmArrayDam: Array<Algorithm> = arrayOf(
             DamRecursionAlgorithm(),
@@ -91,29 +110,10 @@ class AlgorithmTester(string1: String, string2: String, repeats_in: Int) {
             AlgTest("собака", "собачка", 1, 1),
             AlgTest("dija", "djia", 2, 1),
             AlgTest("kolbaska", "kollab", 4, 4),
-            AlgTest("", "", 0, 0),
             AlgTest("абв", "", 3, 3),
             AlgTest("", "абв", 3, 3),
-            AlgTest("увлечение", "развлечения", 4, 4)
+            AlgTest("увлечение", "развлечения", 4, 4),
+            AlgTest("", "", 0, 0),
         )
-
-        fun blackBoxTests() {
-            algorithmArrayLev.forEach { algorithm: Algorithm ->
-                blackBox.forEach { test: AlgTest ->
-                    algorithm.setData(test.s1, test.s2)
-                    test.checkLev(algorithm.findDiff())
-                }
-                println("${algorithm.name} blackbox tests passed!")
-            }
-            println("All Lev blackbox tests passed!")
-            algorithmArrayDam.forEach { algorithm: Algorithm ->
-                blackBox.forEach { test: AlgTest ->
-                    algorithm.setData(test.s1, test.s2)
-                    test.checkDam(algorithm.findDiff())
-                }
-                println("${algorithm.name} blackbox tests passed!")
-            }
-            println("All Dam blackbox tests passed!")
-        }
     }
 }
